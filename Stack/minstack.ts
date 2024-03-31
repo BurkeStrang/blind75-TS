@@ -63,3 +63,5 @@ class MinStack {
   }
 }
 
+export { MinStack };
+
