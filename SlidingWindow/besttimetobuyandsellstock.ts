@@ -14,7 +14,6 @@ function maxProfit(prices: number[]): number {
     }
     r++;
   }
-
   return max;
 }
 
