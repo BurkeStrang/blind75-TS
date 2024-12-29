@@ -42,6 +42,7 @@
 function carFleet(target: number, position: number[], speed: number[]): number {
   const cars: number[][] = position.map((pos, i) => [pos, speed[i]]).sort((a, b) => b[0] - a[0]);
   let fleets = 0;
+
   let time = 0;
   for (const [pos, spd] of cars) {
     const arrivalTime = (target - pos) / spd;
