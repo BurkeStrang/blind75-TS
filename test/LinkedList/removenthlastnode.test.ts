@@ -1,6 +1,6 @@
 import LinkedList from "../../Shared/linked_list";
 import LinkedListNode from "../../Shared/linked_list_node";
-import { removeNthLastNode } from "../../TwoPointers/removenthlastnode";
+import { removeNthLastNode } from "../../LinkedList/removenthlastnode";
 
 describe("removeNthLastNode", () => {
   let linkedList: LinkedList<number>;
