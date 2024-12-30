@@ -17,6 +17,21 @@
 // The substring "BBBB" has the longest repeating letters, which is 4.
 // There may exists other ways to achieve this answer too.
 
+/**
+ * Returns the length of the longest substring containing
+ * the same letter you can get after performing the above operations.
+ *
+ * @param s The input string to be processed.
+ * @param k The number of skips allowed.
+ * @returns The length of the longest substring containing the same letter.
+ *
+ * @example
+ * ```
+ * Input: s = "ABAB", k = 2
+ * Output: 4
+ * Explanation: Replace the two 'A's with two 'B's or vice versa.
+ * ```
+ */
 function characterReplacement(s: string, k: number): number {
   let left = 0;
   let right = 0;

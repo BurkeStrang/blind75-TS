@@ -22,6 +22,20 @@
 // Explanation: Both 'a's from t must be included in the window.
 // Since the largest window of s only has one 'a', return empty string.
 
+/**
+ * Returns the minimum window substring of s such that every character in t
+ * is included in the window.
+ *
+ * @param s - the larger string
+ * @param t - the smaller string
+ * @returns - the minimum window substring of s such that every character in t
+ * (including duplicates) is included in the window.
+ *
+ * @example
+ * ```
+ * minWindow("ADOBECODEBANC", "ABC") => "BANC";
+ * ```
+ */
 function minWindow(s: string, t: string): string {
   const map = new Map();
   for (const char of t) {

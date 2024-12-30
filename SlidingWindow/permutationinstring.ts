@@ -12,9 +12,22 @@
 // Input: s1 = "ab", s2 = "eidboaoo"
 // Output: false
 
+/**
+ * Function to check if one of s1's permutations is the substring of s2.
+ *
+ * @param s1 - The first string.
+ * @param s2 - The second string.
+ * @returns True if one of s1's permutations is the substring of s2, false otherwise.
+ *
+ * @example
+ * ```
+ * Input: s1 = "ab", s2 = "eidbaooo"
+ * Output: true
+ * ```
+ */
 function checkInclusion(s1: string, s2: string): boolean {
   const map = new Map();
-  for (let char of s1) {
+  for (const char of s1) {
     map.set(char, map.get(char) + 1 || 1);
   }
   let start = 0;
