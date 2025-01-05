@@ -1,57 +1,39 @@
-
 /**
- * What it does.
+ * Finds all k-length substrings (sequences) in the given DNA string that occur more than once.
  *
- * @param name - Parameter description.
- * @returns Type and description of the returned object.
+ * @param dna - A string representing the DNA sequence, composed of characters 'A', 'C', 'G', and 'T'.
+ * @param k - The length of the sequences to search for.
+ * @returns A set containing all k-length sequences that appear more than once in the DNA string.
  *
  * @example
  * ```
- * Write me later.
+ * Input: dna = "AAAAACCCCCAAAAACCCCCC", k = 8
+ * Output: Set {"AAAAACCC","AAAACCCC","AAACCCCC"}
  * ```
  */
-function findRepeatedSequences(dna: string, k: number): Set<string> {
-  const stringLength = dna.length;
+export function findRepeatedSequences(dna: string, k: number): Set<string> {
+  const sequenceCount = new Map<string, number>();
+  const repeatedSequences = new Set<string>();
 
-  if (stringLength < k) {
-    return new Set<string>();
+  // Early exit if k is larger than the DNA string length
+  if (k > dna.length) {
+    return repeatedSequences;
   }
 
-  const mapping = new Map([['A', 1], ['C', 2], ['G', 3], ['T', 4]]);
+  // Iterate through the DNA string to extract all possible k-length substrings
+  for (let i = 0; i <= dna.length - k; i++) {
+    const substring = dna.substring(i, i + k);
 
-  const baseValue = 4;
+    // Update the count for this substring
+    const count = (sequenceCount.get(substring) || 0) + 1;
+    sequenceCount.set(substring, count);
 
-  const numbers = new Array(stringLength);
-  for (let i = 0; i < stringLength; i++) {
-    numbers[i] = mapping.get(dna[i]);
+    // If the count becomes 2, it's a repeated sequence
+    // Doesn't add again if already more than 2
+    if (count === 2) {
+      repeatedSequences.add(substring);
+    }
   }
-
-  let hashValue = 0;
-
-  const hashSet = new Set();
-  const output = new Set<string>();
-
-  for (let i = 0; i < stringLength - k + 1; i++) {
-
-    if (i === 0) {
-      for (let j = 0; j < k; j++) {
-        hashValue += numbers[j] * Math.pow(baseValue, k - j - 1);
-      }
-    }
-
-    else {
-      const previousHashValue = hashValue;
-      hashValue = ((previousHashValue - numbers[i - 1] * Math.pow(baseValue, k - 1)) * baseValue) + numbers[i + k - 1];
-    }
-
-    if (hashSet.has(hashValue)) {
-      output.add(dna.substring(i, i + k));
-    }
-
-    hashSet.add(hashValue);
-  }
-  return output;
-
+  return repeatedSequences;
 }
 
-export { findRepeatedSequences };
