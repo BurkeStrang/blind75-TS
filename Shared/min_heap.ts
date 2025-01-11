@@ -1,5 +1,4 @@
 // Generic MinHeap class with default type of number.
-// If no key function is provided, it assumes that T is a number and uses the identity function.
 class MinHeap<T = number> {
   private data: T[];
   private keyFn: (item: T) => number;
