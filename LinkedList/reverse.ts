@@ -1,4 +1,4 @@
-import LinkedListNode from '../Shared/linked_list_node';
+import LinkedListNode, { printLinkedList } from '../Shared/linked_list_node';
 // import { printLinkedList } from '../Shared/linked_list_node';
 
 export function reverseLinkedList(slowPtr: LinkedListNode<number>): LinkedListNode<number> {
@@ -17,7 +17,7 @@ export function reverseLinkedList(slowPtr: LinkedListNode<number>): LinkedListNo
     // printLinkedList([prev,curr,next,slowPtr], ['prev', 'curr', 'next','slowPtr']);
     // iterate to the next node
     curr = next!;
-    // printLinkedList([prev,curr,next,slowPtr], ['prev', 'curr', 'next','slowPtr']);
+    printLinkedList([prev],['prev']);
   }
 
   return prev!;
