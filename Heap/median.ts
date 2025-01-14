@@ -2,14 +2,14 @@ import MaxHeap from "../Shared/max_heap";
 import MinHeap from "../Shared/min_heap";
 
 export class medianFinder {
-  maxHeap = new MaxHeap();
-  minHeap = new MinHeap();
+  maxHeap = new MaxHeap<number>();
+  minHeap = new MinHeap<number>();
 
   addNum(num: number): void {
     if (this.maxHeap.size() == 0 || num < this.maxHeap.peek()!)
-      this.maxHeap.push(num);
+      this.maxHeap.offer(num);
     else
-      this.minHeap.push(num);
+      this.minHeap.offer(num);
 
     this.balanceHeaps();
   }
@@ -19,17 +19,17 @@ export class medianFinder {
     const smallerHeap = this.maxHeap.size() > this.minHeap.size() ? this.minHeap : this.maxHeap;
 
     if (biggerHeap.size() - smallerHeap.size() > 1) {
-      const value = biggerHeap.pop()!;
-      smallerHeap.push(value);
+      const value = biggerHeap.poll()!;
+      smallerHeap.offer(value);
     }
   }
 
   findMedian(): number | null {
     if (this.maxHeap.size() > this.minHeap.size()) {
-      return this.maxHeap.peek();
+      return this.maxHeap.peek()!;
     }
     else if (this.maxHeap.size() < this.minHeap.size()) {
-      return this.minHeap.peek();
+      return this.minHeap.peek()!;
     }
     return (this.maxHeap.peek()! + this.minHeap.peek()!) / 2.0;
   }

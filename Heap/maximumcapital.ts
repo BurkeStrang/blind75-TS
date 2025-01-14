@@ -29,11 +29,11 @@ import MinHeap from "../Shared/min_heap";
  */
 export function maximumCapital(c: number, k: number, capitals: number[], profits: number[]): number {
   let currentCapital = c;
-  const capitalsMinHeap = new MinHeap<number[]>();
-  const profitsMaxHeap = new MaxHeap<number[]>();
+  const capitalsMinHeap = new MinHeap<[number,number]>();
+  const profitsMaxHeap = new MaxHeap<number>();
 
   for (let x = 0; x < capitals.length; x++) {
-    capitalsMinHeap.push([capitals[x], x]);
+    capitalsMinHeap.offer([capitals[x], x]);
   }
 
   for (let counter = 0; counter < k; counter++) {
@@ -41,19 +41,18 @@ export function maximumCapital(c: number, k: number, capitals: number[], profits
       capitalsMinHeap.size() > 0 &&
       capitalsMinHeap.peek()![0] <= currentCapital
     ) {
-      const element: number[] = capitalsMinHeap.pop()!;
+      const element: number[] = capitalsMinHeap.poll()!;
       c = element[0];
       const i = element[1];
-      profitsMaxHeap.push([profits[i]]);
+      profitsMaxHeap.offer(profits[i]);
     }
 
     if (profitsMaxHeap.size() == 0) {
       break
     }
 
-    const element = profitsMaxHeap.pop();
-    const j = element![0];
-    currentCapital = currentCapital + j;
+    const element = profitsMaxHeap.poll();
+    currentCapital = currentCapital + (element ? element : 0);
   }
 
   return currentCapital;

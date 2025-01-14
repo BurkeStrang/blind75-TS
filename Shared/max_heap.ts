@@ -1,31 +1,23 @@
-// Generic MaxHeap class with default type of number.
-class MaxHeap<T = number> {
+// Define a type alias for allowed elements.
+type HeapElement = number | [number, ...unknown[]];
+
+export default class MaxHeap<T extends HeapElement = HeapElement> {
   private data: T[];
-  private keyFn: (item: T) => number;
+  // The comparison function uses the extracted number value.
+  private compareVal: (a: number, b: number) => number;
 
-  /**
-   * You can call the constructor in two ways:
-   *  1. With no arguments: constructs an empty heap of numbers.
-   *  2. With an array and a key function: constructs a heap of type T.
-   *
-   * @param data - (Optional) An initial array of items.
-   * @param keyFn - (Optional) A function that maps an item to a number for comparison.
-   */
-  constructor(data?: T[], keyFn?: (item: T) => number) {
-    if (keyFn) {
-      this.keyFn = keyFn;
-    } else {
-      // Assume items are numbers when no key function is provided.
-      this.keyFn = ((item: T) => item) as (item: T) => number;
-    }
-
-    this.data = data ? [...data] : [];
+  constructor(data: T[] = []) {
+    this.data = data;
+    // For max heap: higher numeric value should be at the top.
+    this.compareVal = (a: number, b: number) => b - a;
     this.heapify();
   }
 
-  /**
-   * Re-arrange the array into a valid max-heap.
-   */
+  // Helper method to extract a number from an element.
+  private getValue(item: T): number {
+    return typeof item === "number" ? item : item[0];
+  }
+
   private heapify(): void {
     if (this.size() < 2) return;
     for (let i = 1; i < this.size(); i++) {
@@ -33,51 +25,30 @@ class MaxHeap<T = number> {
     }
   }
 
-  /**
-   * Returns the item with the highest key in the heap without removing it.
-   */
   public peek(): T | null {
     return this.size() === 0 ? null : this.data[0];
   }
 
-  /**
-   * Inserts a new item into the heap.
-   * @param value - The value to be inserted.
-   */
-  public push(value: T): void {
+  public offer(value: T): void {
     this.data.push(value);
     this.percolateUp(this.size() - 1);
   }
 
-  /**
-   * Removes and returns the element with the highest key in the heap.
-   */
-  public pop(): T | null {
+  public poll(): T | null {
     if (this.size() === 0) return null;
     const result = this.data[0];
     const last = this.data.pop()!;
-    if (this.size() !== 0) {
+    if (this.size() > 0) {
       this.data[0] = last;
       this.percolateDown(0);
     }
     return result;
   }
 
-  /**
-   * Returns the number of elements in the heap.
-   */
-  public size(): number {
-    return this.data.length;
-  }
-
-  /**
-   * Moves the element at the given index up until the heap property is restored.
-   * @param index - The index of the element to percolate up.
-   */
   private percolateUp(index: number): void {
     while (index > 0) {
-      const parentIndex = (index - 1) >> 1;
-      if (this.keyFn(this.data[index]) > this.keyFn(this.data[parentIndex])) {
+      const parentIndex: number = (index - 1) >> 1;
+      if (this.compareVal(this.getValue(this.data[index]), this.getValue(this.data[parentIndex])) < 0) {
         this.swap(index, parentIndex);
         index = parentIndex;
       } else {
@@ -86,48 +57,41 @@ class MaxHeap<T = number> {
     }
   }
 
-  /**
-   * Moves the element at the given index down until the heap property is restored.
-   * @param index - The index of the element to percolate down.
-   */
   private percolateDown(index: number): void {
-    const lastIndex = this.size() - 1;
+    const lastIndex: number = this.size() - 1;
     while (true) {
-      const leftIndex = index * 2 + 1;
-      const rightIndex = index * 2 + 2;
-      let largest = index;
+      const leftIndex: number = index * 2 + 1;
+      const rightIndex: number = index * 2 + 2;
+      let targetIndex: number = index;
 
       if (
         leftIndex <= lastIndex &&
-        this.keyFn(this.data[leftIndex]) > this.keyFn(this.data[largest])
+        this.compareVal(this.getValue(this.data[leftIndex]), this.getValue(this.data[targetIndex])) < 0
       ) {
-        largest = leftIndex;
+        targetIndex = leftIndex;
       }
 
       if (
         rightIndex <= lastIndex &&
-        this.keyFn(this.data[rightIndex]) > this.keyFn(this.data[largest])
+        this.compareVal(this.getValue(this.data[rightIndex]), this.getValue(this.data[targetIndex])) < 0
       ) {
-        largest = rightIndex;
+        targetIndex = rightIndex;
       }
 
-      if (largest !== index) {
-        this.swap(index, largest);
-        index = largest;
+      if (targetIndex !== index) {
+        this.swap(index, targetIndex);
+        index = targetIndex;
       } else {
         break;
       }
     }
   }
 
-  /**
-   * Swaps two elements in the heap.
-   * @param i - Index of the first element.
-   * @param j - Index of the second element.
-   */
-  private swap(i: number, j: number): void {
-    [this.data[i], this.data[j]] = [this.data[j], this.data[i]];
+  private swap(index1: number, index2: number): void {
+    [this.data[index1], this.data[index2]] = [this.data[index2], this.data[index1]];
+  }
+
+  public size(): number {
+    return this.data.length;
   }
 }
-
-export default MaxHeap;

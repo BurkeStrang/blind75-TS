@@ -1,86 +1,54 @@
-// Generic MinHeap class with default type of number.
-class MinHeap<T = number> {
+// Define a type alias for allowed elements.
+type HeapElement = number | [number, ...unknown[]];
+
+export default class MinHeap<T extends HeapElement = HeapElement> {
   private data: T[];
-  private keyFn: (item: T) => number;
+  // The comparison function extracts the number and sorts in ascending order.
+  private compareVal: (a: number, b: number) => number;
 
-  /**
-   * You can call the constructor in two ways:
-   *  1. With no arguments: constructs an empty heap of numbers.
-   *  2. With an array and a key function: constructs a heap of type T.
-   *
-   * @param data - (Optional) An initial array of items.
-   * @param keyFn - (Optional) A function that maps an item to a number for comparison.
-   */
-  constructor(data?: T[], keyFn?: (item: T) => number) {
-    // If no key function is provided, assume items are numbers.
-    if (keyFn) {
-      this.keyFn = keyFn;
-    } else {
-      // Type assertion: if T is not number and no key function is provided,
-      // errors may occur at runtime.
-      this.keyFn = ((item: T) => item) as (item: T) => number;
-    }
-
-    this.data = data ? [...data] : [];
+  constructor(data: T[] = []) {
+    this.data = data;
+    // In a min heap, smaller numbers are higher priority.
+    this.compareVal = (a: number, b: number) => a - b;
     this.heapify();
   }
 
-  /**
-   * Re-arrange the array into a valid min-heap.
-   */
+  // Helper method to extract a number from an element.
+  private getValue(item: T): number {
+    return typeof item === "number" ? item : item[0];
+  }
+
   private heapify(): void {
     if (this.size() < 2) return;
-    // Start at index 1 and push the element up if necessary.
     for (let i = 1; i < this.size(); i++) {
       this.percolateUp(i);
     }
   }
 
-  /**
-   * Returns the item with the smallest key in the heap without removing it.
-   */
   public peek(): T | null {
     return this.size() === 0 ? null : this.data[0];
   }
 
-  /**
-   * Inserts a new item into the heap.
-   * @param value - The value to be inserted.
-   */
-  public push(value: T): void {
+  public offer(value: T): void {
     this.data.push(value);
     this.percolateUp(this.size() - 1);
   }
 
-  /**
-   * Removes and returns the smallest item in the heap.
-   */
-  public pop(): T | null {
+  public poll(): T | null {
     if (this.size() === 0) return null;
     const result = this.data[0];
     const last = this.data.pop()!;
-    if (this.size() !== 0) {
+    if (this.size() > 0) {
       this.data[0] = last;
       this.percolateDown(0);
     }
     return result;
   }
 
-  /**
-   * Returns the number of elements in the heap.
-   */
-  public size(): number {
-    return this.data.length;
-  }
-
-  /**
-   * Moves the element at the given index up until the heap property is restored.
-   * @param index - The index of the element to percolate up.
-   */
   private percolateUp(index: number): void {
     while (index > 0) {
-      const parentIndex = (index - 1) >> 1;
-      if (this.keyFn(this.data[index]) < this.keyFn(this.data[parentIndex])) {
+      const parentIndex: number = (index - 1) >> 1;
+      if (this.compareVal(this.getValue(this.data[index]), this.getValue(this.data[parentIndex])) < 0) {
         this.swap(index, parentIndex);
         index = parentIndex;
       } else {
@@ -89,48 +57,41 @@ class MinHeap<T = number> {
     }
   }
 
-  /**
-   * Moves the element at the given index down until the heap property is restored.
-   * @param index - The index of the element to percolate down.
-   */
   private percolateDown(index: number): void {
-    const lastIndex = this.size() - 1;
+    const lastIndex: number = this.size() - 1;
     while (true) {
-      const leftIndex = index * 2 + 1;
-      const rightIndex = index * 2 + 2;
-      let smallest = index;
+      const leftIndex: number = index * 2 + 1;
+      const rightIndex: number = index * 2 + 2;
+      let targetIndex: number = index;
 
       if (
         leftIndex <= lastIndex &&
-        this.keyFn(this.data[leftIndex]) < this.keyFn(this.data[smallest])
+        this.compareVal(this.getValue(this.data[leftIndex]), this.getValue(this.data[targetIndex])) < 0
       ) {
-        smallest = leftIndex;
+        targetIndex = leftIndex;
       }
 
       if (
         rightIndex <= lastIndex &&
-        this.keyFn(this.data[rightIndex]) < this.keyFn(this.data[smallest])
+        this.compareVal(this.getValue(this.data[rightIndex]), this.getValue(this.data[targetIndex])) < 0
       ) {
-        smallest = rightIndex;
+        targetIndex = rightIndex;
       }
 
-      if (smallest !== index) {
-        this.swap(index, smallest);
-        index = smallest;
+      if (targetIndex !== index) {
+        this.swap(index, targetIndex);
+        index = targetIndex;
       } else {
         break;
       }
     }
   }
 
-  /**
-   * Swaps two elements in the heap.
-   * @param i - Index of the first element.
-   * @param j - Index of the second element.
-   */
-  private swap(i: number, j: number): void {
-    [this.data[i], this.data[j]] = [this.data[j], this.data[i]];
+  private swap(index1: number, index2: number): void {
+    [this.data[index1], this.data[index2]] = [this.data[index2], this.data[index1]];
+  }
+
+  public size(): number {
+    return this.data.length;
   }
 }
-
-export default MinHeap;

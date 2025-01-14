@@ -14,26 +14,25 @@ import MinHeap from '../Shared/min_heap';
  */
 export function minMachines(tasksList: number[][]): number {
   // First, sort the tasks by their start time.
-  const taskHeap = new MinHeap(tasksList, task => task[0]);
+  tasksList.sort((a, b) => a[0] - b[0]);
   let optimalMachines = 0;
   // Create a min-heap for tracking available machines by their end times.
-  const machinesAvailable = new MinHeap();
+  const machinesAvailable = new MinHeap<number>();
 
-  while (taskHeap.size() > 0) {
-    const task = taskHeap.pop()!;
+  for (const task of tasksList) {
     const taskStart = task[0];
     const taskEnd = task[1];
 
     // Check if a machine is available (the one with the earliest finishing time)
     if (machinesAvailable.size() > 0 && machinesAvailable.peek()! <= taskStart) {
       // Machine becomes free and can be reused.
-      machinesAvailable.pop();
+      machinesAvailable.poll();
     } else {
       // No available machine, need to allocate a new one.
       optimalMachines++;
     }
     // Add (or re-add) this machine with the new end time.
-    machinesAvailable.push(taskEnd);
+    machinesAvailable.offer(taskEnd);
   }
 
   return optimalMachines;
