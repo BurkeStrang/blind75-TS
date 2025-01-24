@@ -1,0 +1,22 @@
+{
+    "arrowParens": "avoid",
+    "endOfLine": "auto",
+    "jsdocPrintWidth": 80,
+    "jsdocCommentLineStrategy": "multiline",
+    "plugins": [
+        "./node_modules/prettier-plugin-jsdoc/dist/index.js",
+        "./node_modules/prettier-plugin-multiline-arrays/dist/index.js"
+    ],
+    "printWidth": 80,
+    "tabWidth": 4,
+    "trailingComma": "es5",
+    "multilineArraysWrapThreshold": 9999999,
+    "overrides": [
+        {
+            "files": "*.json",
+            "options": {
+                "multilineArraysWrapThreshold": 0
+            }
+        }
+    ]
+}
