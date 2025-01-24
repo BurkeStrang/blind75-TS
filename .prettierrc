@@ -7,7 +7,7 @@
         "./node_modules/prettier-plugin-jsdoc/dist/index.js",
         "./node_modules/prettier-plugin-multiline-arrays/dist/index.js"
     ],
-    "printWidth": 80,
+    "printWidth": 100,
     "tabWidth": 4,
     "trailingComma": "es5",
     "multilineArraysWrapThreshold": 9999999,

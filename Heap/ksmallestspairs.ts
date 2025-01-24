@@ -24,7 +24,6 @@ export function kSmallestPairs(
     for (let i = 0; i < Math.min(k, listLength); i++) {
         minHeapForPairs.offer([list1[i] + list2[0], i, 0]);
     }
-    console.log(minHeapForPairs);
 
     let counter = 1;
 
