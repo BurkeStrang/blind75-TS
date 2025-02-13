@@ -3,7 +3,14 @@ import { dailyTemperatures } from "../../Stack/dailytemp";
 describe("Daily Temperatures", () => {
     test("Example 1", () => {
         expect(dailyTemperatures([73, 74, 75, 71, 69, 72, 76, 73])).toStrictEqual([
-            1, 1, 4, 2, 1, 1, 0, 0,
+            1,
+            1,
+            4,
+            2,
+            1,
+            1,
+            0,
+            0,
         ]);
     });
     test("Example 2", () => {
