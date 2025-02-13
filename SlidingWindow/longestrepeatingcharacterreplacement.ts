@@ -1,4 +1,4 @@
-// You are given a string s and an integer k. 
+// You are given a string s and an integer k.
 // You can choose any character of the string and change it to any other uppercase English character.
 // You can perform this operation at most k times.
 //
@@ -33,22 +33,22 @@
  * ```
  */
 function characterReplacement(s: string, k: number): number {
-  let left = 0;
-  let right = 0;
-  let max = 0;
-  let maxCount = 0;
-  const map = new Map();
-  while (right < s.length) {
-    map.set(s[right], (map.get(s[right]) || 0) + 1);
-    maxCount = Math.max(maxCount, map.get(s[right]));
-    if (right - left + 1 - maxCount > k) {
-      map.set(s[left], map.get(s[left]) - 1);
-      left++;
+    let left = 0;
+    let right = 0;
+    let max = 0;
+    let maxCount = 0;
+    const map = new Map();
+    while (right < s.length) {
+        map.set(s[right], (map.get(s[right]) || 0) + 1);
+        maxCount = Math.max(maxCount, map.get(s[right]));
+        if (right - left + 1 - maxCount > k) {
+            map.set(s[left], map.get(s[left]) - 1);
+            left++;
+        }
+        max = Math.max(max, right - left + 1);
+        right++;
     }
-    max = Math.max(max, right - left + 1);
-    right++;
-  }
-  return max;
+    return max;
 }
 
 export { characterReplacement };

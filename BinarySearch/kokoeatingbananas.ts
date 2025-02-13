@@ -23,21 +23,21 @@
 // Output: 23
 
 function minEatingSpeed(piles: number[], h: number): number {
-  let left: number = 1;
-  let right: number = Math.max(...piles);
-  while (left < right) {
-    const mid: number = Math.floor((left + right) / 2);
-    let hours: number = 0;
-    for (let pile of piles) {
-      hours += Math.ceil(pile / mid);
+    let left: number = 1;
+    let right: number = Math.max(...piles);
+    while (left < right) {
+        const mid: number = Math.floor((left + right) / 2);
+        let hours: number = 0;
+        for (let pile of piles) {
+            hours += Math.ceil(pile / mid);
+        }
+        if (hours > h) {
+            left = mid + 1;
+        } else {
+            right = mid;
+        }
     }
-    if (hours > h) {
-      left = mid + 1;
-    } else {
-      right = mid;
-    }
-  }
-  return left;
+    return left;
 }
 
 export { minEatingSpeed };

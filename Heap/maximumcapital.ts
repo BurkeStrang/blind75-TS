@@ -27,33 +27,35 @@ import MinHeap from "../Shared/min_heap";
  * Maximum capital earned: 11
  * ```
  */
-export function maximumCapital(c: number, k: number, capitals: number[], profits: number[]): number {
-  let currentCapital = c;
-  const capitalsMinHeap = new MinHeap<[number,number]>();
-  const profitsMaxHeap = new MaxHeap<number>();
+export function maximumCapital(
+    c: number,
+    k: number,
+    capitals: number[],
+    profits: number[]
+): number {
+    let currentCapital = c;
+    const capitalsMinHeap = new MinHeap<[number, number]>();
+    const profitsMaxHeap = new MaxHeap<number>();
 
-  for (let x = 0; x < capitals.length; x++) {
-    capitalsMinHeap.offer([capitals[x], x]);
-  }
-
-  for (let counter = 0; counter < k; counter++) {
-    while (
-      capitalsMinHeap.size() > 0 &&
-      capitalsMinHeap.peek()![0] <= currentCapital
-    ) {
-      const element: number[] = capitalsMinHeap.poll()!;
-      c = element[0];
-      const i = element[1];
-      profitsMaxHeap.offer(profits[i]);
+    for (let x = 0; x < capitals.length; x++) {
+        capitalsMinHeap.offer([capitals[x], x]);
     }
 
-    if (profitsMaxHeap.size() == 0) {
-      break
+    for (let counter = 0; counter < k; counter++) {
+        while (capitalsMinHeap.size() > 0 && capitalsMinHeap.peek()![0] <= currentCapital) {
+            const element: number[] = capitalsMinHeap.poll()!;
+            c = element[0];
+            const i = element[1];
+            profitsMaxHeap.offer(profits[i]);
+        }
+
+        if (profitsMaxHeap.size() == 0) {
+            break;
+        }
+
+        const element = profitsMaxHeap.poll();
+        currentCapital = currentCapital + (element ? element : 0);
     }
 
-    const element = profitsMaxHeap.poll();
-    currentCapital = currentCapital + (element ? element : 0);
-  }
-
-  return currentCapital;
+    return currentCapital;
 }

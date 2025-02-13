@@ -23,10 +23,12 @@ class LinkedList<T> {
     createLinkedList(list: T[]): void {
         // It's not necessary to reverse the list if inserting at head,
         // but keeping it as per the original implementation.
-        list.slice().reverse().forEach((element) => {
-            const newNode = new LinkedListNode<T>(element);
-            this.insertNodeAtHead(newNode);
-        });
+        list.slice()
+            .reverse()
+            .forEach(element => {
+                const newNode = new LinkedListNode<T>(element);
+                this.insertNodeAtHead(newNode);
+            });
     }
 
     /**

@@ -13,21 +13,21 @@
 // Output: true
 
 function searchMatrix(matrix: number[][], target: number): boolean {
-  let m: number = matrix.length;
-  let n: number = matrix[0].length;
-  let left: number = 0;
-  let right: number = m * n - 1;
-  while (left <= right) {
-    let mid: number = Math.floor((left + right) / 2);
-    let midElement: number = matrix[Math.floor(mid / n)][mid % n];
-    if (midElement === target) return true;
-    if (midElement < target) {
-      left = mid + 1;
-    } else {
-      right = mid - 1;
+    let m: number = matrix.length;
+    let n: number = matrix[0].length;
+    let left: number = 0;
+    let right: number = m * n - 1;
+    while (left <= right) {
+        let mid: number = Math.floor((left + right) / 2);
+        let midElement: number = matrix[Math.floor(mid / n)][mid % n];
+        if (midElement === target) return true;
+        if (midElement < target) {
+            left = mid + 1;
+        } else {
+            right = mid - 1;
+        }
     }
-  }
-  return false;
+    return false;
 }
 
 export { searchMatrix };

@@ -24,20 +24,20 @@
 //
 // Input: nums = [11,13,15,17]
 // Output: 11
-// Explanation: The original array was [11,13,15,17] and it was rotated 4 times. 
+// Explanation: The original array was [11,13,15,17] and it was rotated 4 times.
 
 function findMin(nums: number[]): number {
-  let left = 0;
-  let right = nums.length - 1;
-  while (left < right) {
-    let mid = Math.floor(left + (right - left) / 2);
-    if (nums[mid] < nums[right]) {
-      right = mid;
-    } else {
-      left = mid + 1;
+    let left = 0;
+    let right = nums.length - 1;
+    while (left < right) {
+        let mid = Math.floor(left + (right - left) / 2);
+        if (nums[mid] < nums[right]) {
+            right = mid;
+        } else {
+            left = mid + 1;
+        }
     }
-  }
-  return nums[left];
+    return nums[left];
 }
 
 export { findMin };

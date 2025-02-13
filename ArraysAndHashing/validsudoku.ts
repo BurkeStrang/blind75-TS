@@ -10,24 +10,24 @@
 // Only the filled cells need to be validated according to the mentioned rules.
 
 function isValidSudoku(board: string[][]): boolean {
-  let rows = new Array(9).fill(0).map(() => new Array(9).fill(0));
-  let cols = new Array(9).fill(0).map(() => new Array(9).fill(0));
-  let boxes = new Array(9).fill(0).map(() => new Array(9).fill(0));
-  for (let i = 0; i < 9; i++) {
-    for (let j = 0; j < 9; j++) {
-      if (board[i][j] !== '.') {
-        let num = Number(board[i][j]) - 1;
-        let k = Math.floor(i / 3) * 3 + Math.floor(j / 3);
-        if (rows[i][num] || cols[j][num] || boxes[k][num]) {
-          return false;
+    let rows = new Array(9).fill(0).map(() => new Array(9).fill(0));
+    let cols = new Array(9).fill(0).map(() => new Array(9).fill(0));
+    let boxes = new Array(9).fill(0).map(() => new Array(9).fill(0));
+    for (let i = 0; i < 9; i++) {
+        for (let j = 0; j < 9; j++) {
+            if (board[i][j] !== ".") {
+                let num = Number(board[i][j]) - 1;
+                let k = Math.floor(i / 3) * 3 + Math.floor(j / 3);
+                if (rows[i][num] || cols[j][num] || boxes[k][num]) {
+                    return false;
+                }
+                rows[i][num] = 1;
+                cols[j][num] = 1;
+                boxes[k][num] = 1;
+            }
         }
-        rows[i][num] = 1;
-        cols[j][num] = 1;
-        boxes[k][num] = 1;
-      }
     }
-  }
-  return true;
+    return true;
 }
 
 export { isValidSudoku };

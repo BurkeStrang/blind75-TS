@@ -1,4 +1,4 @@
-import { kthSmallestNumber } from "../../Heap/kthsmallestnumber";
+import { kSmallestNumber } from "../../Heap/kthsmallestsortedlist";
 
 describe("Task Schedueler", () => {
     test("Testcase 1", () => {
@@ -8,7 +8,7 @@ describe("Task Schedueler", () => {
             [12, 13, 15],
         ];
         const k = 8;
-        expect(kthSmallestNumber(matrix, k)).toEqual(13);
+        expect(kSmallestNumber(matrix, k)).toEqual(13);
     });
     test("Testcase 2", () => {
         const matrix = [
@@ -17,7 +17,7 @@ describe("Task Schedueler", () => {
             [12, 13, 15],
         ];
         const k = 4;
-        expect(kthSmallestNumber(matrix, k)).toEqual(10);
+        expect(kSmallestNumber(matrix, k)).toEqual(10);
     });
     test("Testcase 3", () => {
         const matrix = [
@@ -26,6 +26,6 @@ describe("Task Schedueler", () => {
             [12, 13, 15],
         ];
         const k = 1;
-        expect(kthSmallestNumber(matrix, k)).toEqual(1);
+        expect(kSmallestNumber(matrix, k)).toEqual(1);
     });
 });

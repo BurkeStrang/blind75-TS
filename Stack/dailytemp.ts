@@ -15,16 +15,16 @@
 // Output: [1,1,0]
 
 function dailyTemperatures(temperatures: number[]): number[] {
-  const stack: number[] = [];
-  const res: number[] = new Array(temperatures.length).fill(0);
-  for (let i = 0; i < temperatures.length; i++) {
-    while (stack.length && temperatures[i] > temperatures[stack[stack.length - 1]]) {
-      const index = stack.pop() as number;
-      res[index] = i - index;
+    const stack: number[] = [];
+    const res: number[] = new Array(temperatures.length).fill(0);
+    for (let i = 0; i < temperatures.length; i++) {
+        while (stack.length && temperatures[i] > temperatures[stack[stack.length - 1]]) {
+            const index = stack.pop() as number;
+            res[index] = i - index;
+        }
+        stack.push(i);
     }
-    stack.push(i);
-  }
-  return res;
+    return res;
 }
 
 export { dailyTemperatures };

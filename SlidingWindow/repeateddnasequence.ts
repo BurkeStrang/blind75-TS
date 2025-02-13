@@ -12,28 +12,27 @@
  * ```
  */
 export function findRepeatedSequences(dna: string, k: number): Set<string> {
-  const sequenceCount = new Map<string, number>();
-  const repeatedSequences = new Set<string>();
+    const sequenceCount = new Map<string, number>();
+    const repeatedSequences = new Set<string>();
 
-  // Early exit if k is larger than the DNA string length
-  if (k > dna.length) {
-    return repeatedSequences;
-  }
-
-  // Iterate through the DNA string to extract all possible k-length substrings
-  for (let i = 0; i <= dna.length - k; i++) {
-    const substring = dna.substring(i, i + k);
-
-    // Update the count for this substring
-    const count = (sequenceCount.get(substring) || 0) + 1;
-    sequenceCount.set(substring, count);
-
-    // If the count becomes 2, it's a repeated sequence
-    // Doesn't add again if already more than 2
-    if (count === 2) {
-      repeatedSequences.add(substring);
+    // Early exit if k is larger than the DNA string length
+    if (k > dna.length) {
+        return repeatedSequences;
     }
-  }
-  return repeatedSequences;
-}
 
+    // Iterate through the DNA string to extract all possible k-length substrings
+    for (let i = 0; i <= dna.length - k; i++) {
+        const substring = dna.substring(i, i + k);
+
+        // Update the count for this substring
+        const count = (sequenceCount.get(substring) || 0) + 1;
+        sequenceCount.set(substring, count);
+
+        // If the count becomes 2, it's a repeated sequence
+        // Doesn't add again if already more than 2
+        if (count === 2) {
+            repeatedSequences.add(substring);
+        }
+    }
+    return repeatedSequences;
+}

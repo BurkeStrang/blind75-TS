@@ -6,26 +6,26 @@
 // The largest rectangle is shown in the red area, which has an area = 10 units.
 
 function largestRectangleArea(heights: number[]): number {
-  let largestArea = 0;
-  let stack = [];
+    let largestArea = 0;
+    let stack = [];
 
-  for (let i = 0; i < heights.length; i++) {
-    let start = i;
+    for (let i = 0; i < heights.length; i++) {
+        let start = i;
 
-    while (stack.length > 0 && stack[stack.length - 1][1] > heights[i]) {
-      let [lastI, lastH] = (stack ?? []).pop() ?? [];
-      largestArea = Math.max(largestArea, lastH * (i - lastI));
-      start = lastI;
+        while (stack.length > 0 && stack[stack.length - 1][1] > heights[i]) {
+            let [lastI, lastH] = (stack ?? []).pop() ?? [];
+            largestArea = Math.max(largestArea, lastH * (i - lastI));
+            start = lastI;
+        }
+        stack.push([start, heights[i]]);
     }
-    stack.push([start, heights[i]]);
-  }
 
-  for (let j = 0; j < stack.length; j++) {
-    let currArea = stack[j][1] * (heights.length - stack[j][0]);
-    largestArea = Math.max(largestArea, currArea);
-  }
+    for (let j = 0; j < stack.length; j++) {
+        let currArea = stack[j][1] * (heights.length - stack[j][0]);
+        largestArea = Math.max(largestArea, currArea);
+    }
 
-  return largestArea;
+    return largestArea;
 }
 
 export { largestRectangleArea };

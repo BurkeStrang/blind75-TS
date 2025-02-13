@@ -20,27 +20,27 @@
  * ```
  */
 export function isHappyNumber(n: number): boolean {
-  const seenNumbers = new Set();
-  // if the number has been seen it's in a cycle and not a happy number
-  while (!seenNumbers.has(n)) {
-    seenNumbers.add(n);
-    n = calculateSumOfSquares(n);
-    if (n === 1) {
-      return true;
+    const seenNumbers = new Set();
+    // if the number has been seen it's in a cycle and not a happy number
+    while (!seenNumbers.has(n)) {
+        seenNumbers.add(n);
+        n = calculateSumOfSquares(n);
+        if (n === 1) {
+            return true;
+        }
     }
-  }
-  return false;
+    return false;
 }
 /**
  * Loops through each digit squares and adds them.
  * Returns the sum of the squares of the digits of the number.
  */
 function calculateSumOfSquares(number: number) {
-  let sum = 0;
-  while (number > 0) {
-    const digit = number % 10;
-    sum += digit * digit;
-    number = Math.floor(number / 10);
-  }
-  return sum;
+    let sum = 0;
+    while (number > 0) {
+        const digit = number % 10;
+        sum += digit * digit;
+        number = Math.floor(number / 10);
+    }
+    return sum;
 }

@@ -12,11 +12,7 @@ import MinHeap from "../Shared/min_heap";
  * Ouput: [[1,2],[1,4],[1,6]]
  * ```
  */
-export function kSmallestPairs(
-    list1: number[],
-    list2: number[],
-    k: number
-): number[][] {
+export function kSmallestPairs(list1: number[], list2: number[], k: number): number[][] {
     const listLength = list1.length;
     const minHeapForPairs = new MinHeap<[number, number, number]>();
     const pairs = [];

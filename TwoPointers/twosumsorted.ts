@@ -27,19 +27,19 @@
 // Explanation: The sum of -1 and 0 is -1. Therefore index1 = 1, index2 = 2. We return [1, 2].
 
 function twoSum(numbers: number[], target: number): number[] {
-  let left = 0;
-  let right = numbers.length - 1;
-  while (left < right) {
-    const sum = numbers[left] + numbers[right];
-    if (sum === target) {
-      return [left + 1, right + 1];
-    } else if (sum < target) {
-      left++;
-    } else {
-      right--;
+    let left = 0;
+    let right = numbers.length - 1;
+    while (left < right) {
+        const sum = numbers[left] + numbers[right];
+        if (sum === target) {
+            return [left + 1, right + 1];
+        } else if (sum < target) {
+            left++;
+        } else {
+            right--;
+        }
     }
-  }
-  return [];
+    return [];
 }
 
 export { twoSum };
